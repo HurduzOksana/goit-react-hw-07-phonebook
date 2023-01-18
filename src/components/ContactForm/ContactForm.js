@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { addContact } from 'redux/operations';
 import style from './ContactForm.module.css';
-import { getContacts } from 'redux/selectors';
-import { useSelector } from 'react-redux';
 
 const ContactForm = () => {
   const [name, setName] = useState('');
