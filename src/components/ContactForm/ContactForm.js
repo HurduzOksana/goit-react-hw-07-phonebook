@@ -1,23 +1,39 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from 'redux/operations';
 import style from './ContactForm.module.css';
+import { getContacts } from 'redux/selectors';
 
 const ContactForm = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
+  const contacts = useSelector(getContacts);
 
   const dispatch = useDispatch();
 
   const onSubmit = event => {
     event.preventDefault();
+    const normalizedFind = name.toLowerCase();
+    const findName = contacts.find(
+      contact => contact.name.toLowerCase() === normalizedFind
+    );
+    if (findName) {
+      return alert(`${name} is already in contacts.`);
+    }
     if (name && number) {
       dispatch(
         addContact({
           name: name,
           number: number,
         })
+      );
+      event.target.reset(
+        setName &&
+          setNumber({
+            name: '',
+            phone: '',
+          })
       );
     }
   };
