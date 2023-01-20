@@ -4,10 +4,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from 'redux/operations';
 import style from './ContactForm.module.css';
 import { getContacts } from 'redux/selectors';
+import { nanoid } from '@reduxjs/toolkit';
 
 const ContactForm = () => {
   const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
+  const [phone, setNumber] = useState('');
   const contacts = useSelector(getContacts);
 
   const dispatch = useDispatch();
@@ -21,11 +22,11 @@ const ContactForm = () => {
     if (findName) {
       return alert(`${name} is already in contacts.`);
     }
-    if (name && number) {
+    if (name && phone) {
       dispatch(
         addContact({
           name: name,
-          number: number,
+          phone: phone,
         })
       );
       event.target.reset(
@@ -44,19 +45,21 @@ const ContactForm = () => {
         Name
         <input
           type="text"
+          name="name"
           className={style.input}
           placeholder="Add a name"
           pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-          name={name}
+          // value={name}
           onChange={event => setName(event.target.value)}
         ></input>
       </label>
       <input
-        type="text"
+        type="tel"
+        name="phone"
         className={style.input}
         placeholder="Add a number"
         pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-        number={number}
+        // value={phone}
         onChange={event => setNumber(event.target.value)}
       ></input>
 
